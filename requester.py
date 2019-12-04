@@ -2,9 +2,16 @@
 
 import requests
 
+
+class NotOK(Exception):
+    pass
+
+
 def GetPageContentByURL(URL):
     response = requests.get(URL)
     print(f"Page Request '{URL}': Status({response.status_code}), Content Type({response.headers['content-type']}), Encoding({response.encoding})")
+    if response.status_code != 200:
+        raise NotOK
     return response.content
 
 
