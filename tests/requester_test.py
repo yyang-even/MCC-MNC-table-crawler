@@ -3,6 +3,8 @@
 import os
 import sys
 import unittest
+from unittest.mock import patch
+from unittest.mock import Mock
 
 # Add the parent directory of the script to sys.path
 sys.path.insert(1, os.path.join(sys.path[0], '..'))
@@ -11,10 +13,28 @@ import requester
 
 
 class TestStringMethods(unittest.TestCase):
+    def setUp(self):
+        self.EXPECTED_CONTENT = "Page Content"
+        self.ENCODING = "utf-8"
+        self.URL = "Mock URL"
 
-    def test_NotOK(self):
-        URL_404 = 'https://en.wikipedia.org/wiki/No_Such_Page'
-        self.assertRaises(requester.NotOK, requester.GetPageContentByURL, URL_404)
+    def createMockResponse(self, status_code):
+        headers_dictionary = {'content-type' : "HTML"}
+        mock_response = Mock(status_code=status_code, 
+                headers=headers_dictionary, 
+                encoding=self.ENCODING, 
+                content=self.EXPECTED_CONTENT.encode(self.ENCODING))
+        return mock_response
+
+    @patch('requester.requests', autospec=True)
+    def test_NotOK(self, mock_requests):
+        mock_requests.get.return_value = self.createMockResponse(404)
+        self.assertRaises(requester.NotOK, requester.GetPageContentStringByURL, self.URL)
+
+    @patch('requester.requests', autospec=True)
+    def test_OK(self, mock_requests):
+        mock_requests.get.return_value = self.createMockResponse(200)
+        self.assertEqual(self.EXPECTED_CONTENT, requester.GetPageContentStringByURL(self.URL))
 
 
 if __name__ == "__main__":
