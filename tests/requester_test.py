@@ -24,17 +24,10 @@ class TestStringMethods(unittest.TestCase):
             status_code=status_code,
             headers=headers_dictionary,
             encoding=self.ENCODING,
-            content=self.EXPECTED_CONTENT.encode(self.ENCODING),
+            text=self.EXPECTED_CONTENT,
         )
 
         return mock_response
-
-    @patch("requester.requests", autospec=True)
-    def test_NotOK(self, mock_requests):
-        mock_requests.get.return_value = self.createMockResponse(404)
-        self.assertRaises(
-            requester.NotOK, requester.GetPageContentWithLogging, self.URL
-        )
 
     @patch("requester.requests", autospec=True)
     def test_OK(self, mock_requests):

@@ -3,19 +3,14 @@
 import requests
 
 
-class NotOK(Exception):
-    pass
-
-
 def GetPageContentWithLogging(URL) -> str:
     response = requests.get(URL)
     print(
         f"Page Request '{URL}': Status({response.status_code}), Content Type({response.headers['content-type']}), Encoding({response.encoding})"
     )
-    if response.status_code != 200:
-        raise NotOK
+    response.raise_for_status()
 
-    return response.content.decode(response.encoding)
+    return response.text
 
 
 if __name__ == "__main__":
