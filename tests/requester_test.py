@@ -12,7 +12,7 @@ sys.path.insert(1, os.path.join(sys.path[0], ".."))
 import requester
 
 
-class TestStringMethods(unittest.TestCase):
+class TestGetPageContentWithLogging(unittest.TestCase):
     def setUp(self):
         self.EXPECTED_CONTENT = "Page Content"
         self.ENCODING = "utf-8"
