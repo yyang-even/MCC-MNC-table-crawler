@@ -30,7 +30,7 @@ class TestGetPageContentWithLogging(unittest.TestCase):
         return mock_response
 
     @patch("requester.requests", autospec=True)
-    def test_OK(self, mock_requests):
+    def test_Sanity(self, mock_requests):
         mock_requests.get.return_value = self.createMockResponse(200)
         self.assertEqual(
             self.EXPECTED_CONTENT, requester.GetPageContentWithLogging(self.URL)
