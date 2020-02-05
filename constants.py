@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 WIKI_DOMAIN_NAME = "https://en.wikipedia.org"
 
 SAMPLE_MAIN_HTML_FILE = "tests/data/mcc_main_page.html"

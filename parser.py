@@ -5,6 +5,7 @@ import re
 from typing import List
 
 from bs4 import BeautifulSoup
+from bs4 import SoupStrainer
 
 import constants
 from mobile_code_data import MobileCodeDataEntry
@@ -13,6 +14,12 @@ import util
 
 def MakeSoup(html):
     return BeautifulSoup(html, "html.parser")
+
+
+def MakeFineSoup(html):
+    return BeautifulSoup(
+        html, "html.parser", parse_only=SoupStrainer("table", class_="wikitable")
+    )
 
 
 def ExtractMobileCodeSubLinks(main_soup) -> List[str]:
