@@ -12,3 +12,10 @@ def ToFullWikiURLIfNecessary(short_url) -> str:
 
 def RemoveParenthesesAndWithin(a_string) -> str:
     return re.sub(r" ?\([^)]+\)", "", a_string)
+
+
+def FileLength(filename):
+    with open(filename, "r", encoding="utf-8") as f:
+        for i, _ in enumerate(f):
+            pass
+    return i + 1
