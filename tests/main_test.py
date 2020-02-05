@@ -26,7 +26,7 @@ class TestMain(unittest.TestCase):
         mock_html_getter.return_value = util.ReadWholeFile(
             constants.SAMPLE_MAIN_HTML_FILE
         )
-        main.Main()
+        main.MainCSV()
         self.assertTrue(os.path.isfile(constants.DEFAULT_OUTPUT_FILE_PATH))
         number_data_lines = sum(constants.TABLE_SIZES_OF_MAIN) * (
             constants.NUMBER_SUB_LINKS + 1
