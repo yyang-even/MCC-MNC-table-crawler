@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 
+import itertools
 import re
 from typing import List
 
@@ -28,10 +29,7 @@ def PurifyHeaderName(a_header_name) -> str:
 
 
 def GetPureHeaders(header_row_tag) -> List[str]:
-    return [
-        PurifyHeaderName(a_header_name)
-        for a_header_name in header_row_tag.stripped_strings
-    ]
+    return list(map(PurifyHeaderName, header_row_tag.stripped_strings))
 
 
 def isMobileCodeTable(headers) -> bool:
@@ -49,14 +47,14 @@ def ToDataEntry(data_row_tag, attributes):
     return MobileCodeDataEntry(**dict(zip(attributes, values)))
 
 
-def ExtractAllDataRows(header_row_tag, headers):
+def ExtractAllDataRows(header_row_tag, headers) -> List[MobileCodeDataEntry]:
     return [
         ToDataEntry(data_row_tag, headers)
         for data_row_tag in header_row_tag.find_next_siblings("tr")
     ]
 
 
-def ParseOneTable(table_tag):
+def ParseOneTable(table_tag) -> List[MobileCodeDataEntry]:
     header_row_tag = table_tag.tbody.tr
     headers = GetPureHeaders(header_row_tag)
 
@@ -66,17 +64,29 @@ def ParseOneTable(table_tag):
     return []
 
 
-def ExtractAllMobileCodeTables(soup):
-    return [
-        ParseOneTable(table_tag)
-        for table_tag in soup.find_all("table", class_="wikitable")
-    ]
+def ExtractAllMobileCodeTables(soup) -> List[List[MobileCodeDataEntry]]:
+    return list(
+        itertools.filterfalse(
+            lambda l: not l,
+            map(ParseOneTable, soup.find_all("table", class_="wikitable")),
+        )
+    )
 
 
 if __name__ == "__main__":
     import pprint
 
+    import formatter
+
     pp = pprint.PrettyPrinter(indent=4)
 
     with open(constants.SAMPLE_MAIN_HTML_FILE, "r", encoding="utf-8") as main_html_file:
-        pp.pprint(ExtractAllMobileCodeTables(MakeSoup(main_html_file)))
+        mobile_code_tables = ExtractAllMobileCodeTables(MakeSoup(main_html_file))
+        pp.pprint(mobile_code_tables)
+
+        formatter.WriteToCsvFile(
+            "/tmp/mcc_main_table.csv",
+            itertools.chain.from_iterable(mobile_code_tables),
+            constants.FIELD_ORDERS,
+            constants.LOWERCASE_FIELD_ORDERS,
+        )

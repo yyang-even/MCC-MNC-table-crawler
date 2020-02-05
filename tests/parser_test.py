@@ -56,13 +56,13 @@ class TestExtractAllMobileCodeTables(unittest.TestCase):
         with open(
             constants.SAMPLE_MAIN_HTML_FILE, "r", encoding="utf-8"
         ) as main_html_file:
-            all_table_lengths = [
-                len(table)
-                for table in parser.ExtractAllMobileCodeTables(
-                    parser.MakeSoup(main_html_file)
+            all_table_lengths = list(
+                map(
+                    len,
+                    parser.ExtractAllMobileCodeTables(parser.MakeSoup(main_html_file)),
                 )
-            ]
-            self.assertEqual([4, 0, 72, 1], all_table_lengths)
+            )
+            self.assertEqual([4, 72, 1], all_table_lengths)
 
 
 class TestToDataEntry(unittest.TestCase):
