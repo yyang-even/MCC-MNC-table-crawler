@@ -25,6 +25,11 @@ def FileLength(filename):
     return i + 1
 
 
+def ReadWholeFile(filename):
+    with open(filename, "r", encoding="utf-8") as f:
+        return f.read()
+
+
 def PacedCall(interval_seconds=constants.POLITE_SLEEP_SECONDS):
     def decorator_PacedCall(func):
         @functools.wraps(func)

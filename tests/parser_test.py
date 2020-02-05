@@ -19,7 +19,7 @@ class TestGetSubMncPageLinks(unittest.TestCase):
         ) as main_html_file:
             main_soup = parser.MakeSoup(main_html_file)
             sub_links = parser.ExtractMobileCodeSubLinks(main_soup)
-            self.assertEqual(6, len(sub_links))
+            self.assertEqual(constants.NUMBER_SUB_LINKS, len(sub_links))
 
 
 class TestPurifyHeaderName(unittest.TestCase):
@@ -62,7 +62,7 @@ class TestExtractAllMobileCodeTables(unittest.TestCase):
                     parser.ExtractAllMobileCodeTables(parser.MakeSoup(main_html_file)),
                 )
             )
-            self.assertEqual([4, 72, 1], all_table_lengths)
+            self.assertEqual(constants.TABLE_SIZES_OF_MAIN, all_table_lengths)
 
 
 class TestToDataEntry(unittest.TestCase):
