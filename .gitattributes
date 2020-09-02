@@ -1,0 +1,2 @@
+# Exclude test data from Linguist
+tests/data/mcc_main_page.html linguist-vendored
