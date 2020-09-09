@@ -1,3 +1,4 @@
+default_stages: [commit]
 repos:
   - repo: https://github.com/psf/black
     rev: 20.8b1
@@ -8,9 +9,11 @@ repos:
     rev: v3.2.0
     hooks:
       - id: check-executables-have-shebangs
+        stages: [commit]
       - id: check-json
       - id: check-merge-conflict
       - id: check-xml
       - id: check-yaml
       - id: debug-statements
       - id: trailing-whitespace
+        stages: [commit]
