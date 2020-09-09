@@ -1,6 +1,16 @@
 repos:
   - repo: https://github.com/psf/black
-    rev: stable
+    rev: 20.8b1
     hooks:
       - id: black
-        language_version: python3.6
+        language_version: python3
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v3.2.0
+    hooks:
+      - id: check-executables-have-shebangs
+      - id: check-json
+      - id: check-merge-conflict
+      - id: check-xml
+      - id: check-yaml
+      - id: debug-statements
+      - id: trailing-whitespace
