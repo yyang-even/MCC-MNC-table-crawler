@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# type: ignore[attr-defined]
 
 import itertools
 import re
@@ -12,17 +13,17 @@ from mobile_code_data import MobileCodeDataEntry
 import util
 
 
-def MakeSoup(html):
+def MakeSoup(html: str) -> BeautifulSoup:
     return BeautifulSoup(html, "html.parser")
 
 
-def MakeFineSoup(html):
+def MakeFineSoup(html: str) -> BeautifulSoup:
     return BeautifulSoup(
         html, "html.parser", parse_only=SoupStrainer("table", class_="wikitable")
     )
 
 
-def ExtractMobileCodeSubLinks(main_soup) -> List[str]:
+def ExtractMobileCodeSubLinks(main_soup: BeautifulSoup) -> List[str]:
     return [
         util.ToFullWikiURLIfNecessary(link_tag.get("href"))
         for link_tag in main_soup.find_all(
@@ -31,7 +32,7 @@ def ExtractMobileCodeSubLinks(main_soup) -> List[str]:
     ]
 
 
-def PurifyHeaderName(a_header_name) -> str:
+def PurifyHeaderName(a_header_name: str) -> str:
     return util.RemoveParenthesesAndWithin(a_header_name).replace(" ", "_").lower()
 
 
@@ -39,11 +40,11 @@ def GetPureHeaders(header_row_tag) -> List[str]:
     return list(map(PurifyHeaderName, header_row_tag.stripped_strings))
 
 
-def isMobileCodeTable(headers) -> bool:
+def isMobileCodeTable(headers: List[str]) -> bool:
     return set(constants.REQUIRED_FIELDS).issubset(set(headers))
 
 
-def CheckAttributesAvailability(attributes):
+def CheckAttributesAvailability(attributes: List[str]) -> None:
     for attribute_name in attributes:
         if not hasattr(MobileCodeDataEntry, attribute_name):
             raise AttributeError(attribute_name)
@@ -71,7 +72,7 @@ def ParseOneTable(table_tag) -> List[MobileCodeDataEntry]:
     return []
 
 
-def ExtractAllMobileCodeTables(soup) -> List[List[MobileCodeDataEntry]]:
+def ExtractAllMobileCodeTables(soup: BeautifulSoup) -> List[List[MobileCodeDataEntry]]:
     return list(
         itertools.filterfalse(
             lambda l: not l,

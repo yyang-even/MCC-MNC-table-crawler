@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# type: ignore[attr-defined]
 
 import os
 import sys
@@ -12,7 +13,7 @@ import parser
 
 
 class TestToDataEntry(unittest.TestCase):
-    def setUp(self):
+    def setUp(self) -> None:
         self.HEADERS = [
             "mcc",
             "mnc",
@@ -23,7 +24,7 @@ class TestToDataEntry(unittest.TestCase):
             "references_and_notes",
         ]
 
-    def test_DataOneLessThanHeaders(self):
+    def test_DataOneLessThanHeaders(self) -> None:
         data_row_tag = parser.MakeSoup(
             """
 <tr>
@@ -49,7 +50,7 @@ class TestToDataEntry(unittest.TestCase):
             parser.ToDataEntry(data_row_tag, self.HEADERS),
         )
 
-    def test_EmptyBrand(self):
+    def test_EmptyBrand(self) -> None:
         data_row_tag = parser.MakeSoup(
             """
 <tr>
@@ -75,7 +76,7 @@ class TestToDataEntry(unittest.TestCase):
             parser.ToDataEntry(data_row_tag, self.HEADERS),
         )
 
-    def test_ContainsLinks(self):
+    def test_ContainsLinks(self) -> None:
         data_row_tag = parser.MakeSoup(
             """
 <tr>
@@ -101,7 +102,7 @@ class TestToDataEntry(unittest.TestCase):
             parser.ToDataEntry(data_row_tag, self.HEADERS),
         )
 
-    def test_PartialLinks(self):
+    def test_PartialLinks(self) -> None:
         data_row_tag = parser.MakeSoup(
             """
 <tr>

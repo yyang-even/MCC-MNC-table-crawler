@@ -1,11 +1,15 @@
 #!/usr/bin/env python3
 
 import csv
+from typing import Any, List, Optional
 
 
 def WriteToCsvFile(
-    filepath, iterable_data, pretty_fieldnames, lowercase_fieldnames=None
-):
+    filepath: str,
+    iterable_data: Any,
+    pretty_fieldnames: str,
+    lowercase_fieldnames: Optional[List[str]] = None,
+) -> None:
     with open(filepath, "w", encoding="utf-8") as csv_file:
         if lowercase_fieldnames is None:
             lowercase_fieldnames = list(map(str.lower, pretty_fieldnames))

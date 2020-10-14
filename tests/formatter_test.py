@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# type: ignore[attr-defined]
 
 import itertools
 import os
@@ -16,10 +17,10 @@ import util
 
 
 class TestWriteToCsvFile(unittest.TestCase):
-    def setUp(self):
+    def setUp(self) -> None:
         self.NUMBER_OF_DATA = 5
 
-    def test_Sanity(self):
+    def test_Sanity(self) -> None:
         with tempfile.TemporaryDirectory() as tmp_dir_name:
             csv_file_path = os.path.join(tmp_dir_name, "formatter_sanity_test.csv")
             formatter.WriteToCsvFile(

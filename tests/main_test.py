@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# type: ignore[attr-defined]
 
 import os
 import sys
@@ -15,14 +16,14 @@ import util
 
 
 class TestMain(unittest.TestCase):
-    def setUp(self):
+    def setUp(self) -> None:
         try:
             os.remove(constants.DEFAULT_OUTPUT_FILE_PATH)
         except:
             pass
 
     @patch("main.requester.GetPageContentWithLogging", autospec=True)
-    def test_Sanity(self, mock_html_getter):
+    def test_Sanity(self, mock_html_getter: Mock) -> None:
         mock_html_getter.return_value = util.ReadWholeFile(
             constants.SAMPLE_MAIN_HTML_FILE
         )

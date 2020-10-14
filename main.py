@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# type: ignore[attr-defined]
 
 import itertools
 import pprint
@@ -10,7 +11,7 @@ import requester
 import util
 
 
-def GetDataIterable(main_url):
+def GetDataIterable(main_url: str) -> Any:
     main_page_content = requester.GetPageContentWithLogging(main_url)
 
     main_soup = parser.MakeSoup(main_page_content)
@@ -30,7 +31,9 @@ def GetDataIterable(main_url):
     return itertools.chain.from_iterable(all_data)
 
 
-def MainCSV(main_url=util.ToFullWikiURLIfNecessary("/wiki/Mobile_country_code")):
+def MainCSV(
+    main_url: str = util.ToFullWikiURLIfNecessary("/wiki/Mobile_country_code"),
+) -> None:
     formatter.WriteToCsvFile(
         constants.DEFAULT_OUTPUT_FILE_PATH,
         GetDataIterable(main_url),
@@ -40,8 +43,8 @@ def MainCSV(main_url=util.ToFullWikiURLIfNecessary("/wiki/Mobile_country_code"))
 
 
 def MainPrettyPrint(
-    main_url=util.ToFullWikiURLIfNecessary("/wiki/Mobile_country_code"),
-):
+    main_url: str = util.ToFullWikiURLIfNecessary("/wiki/Mobile_country_code"),
+) -> None:
     pp = pprint.PrettyPrinter(indent=4)
     pp.pprint(list(GetDataIterable(main_url)))
 

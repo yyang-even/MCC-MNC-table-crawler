@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# type: ignore[attr-defined]
 
 import os
 import sys
@@ -12,7 +13,7 @@ import parser
 
 
 class TestGetSubMncPageLinks(unittest.TestCase):
-    def test_LengthAsExpectedUsingSampleData(self):
+    def test_LengthAsExpectedUsingSampleData(self) -> None:
         with open(
             constants.SAMPLE_MAIN_HTML_FILE, "r", encoding="utf-8"
         ) as main_html_file:
@@ -22,36 +23,36 @@ class TestGetSubMncPageLinks(unittest.TestCase):
 
 
 class TestPurifyHeaderName(unittest.TestCase):
-    def test_AllCharsShouldBeCovertedToLowercase(self):
+    def test_AllCharsShouldBeCovertedToLowercase(self) -> None:
         self.assertEqual("mcc", parser.PurifyHeaderName("MCC"))
 
-    def test_ParenthesesShouldBeRemoved(self):
+    def test_ParenthesesShouldBeRemoved(self) -> None:
         self.assertEqual("bands", parser.PurifyHeaderName("Bands (MHz)"))
 
-    def test_RemainingSpacesShouldBeReplacedWithUnderscores(self):
+    def test_RemainingSpacesShouldBeReplacedWithUnderscores(self) -> None:
         self.assertEqual(
             "references_and_notes", parser.PurifyHeaderName("References and notes")
         )
 
 
 class TestIsMobileCodeTable(unittest.TestCase):
-    def test_SameSetAsRequiredFiledsShouldReturnTrue(self):
+    def test_SameSetAsRequiredFiledsShouldReturnTrue(self) -> None:
         self.assertTrue(parser.isMobileCodeTable(constants.REQUIRED_FIELDS))
 
-    def test_SuperSetOfRequiredFiledsShouldReturnTrue(self):
+    def test_SuperSetOfRequiredFiledsShouldReturnTrue(self) -> None:
         self.assertTrue(parser.isMobileCodeTable(constants.REQUIRED_FIELDS + ["dummy"]))
 
-    def test_SubSetOfRequiredFiledsShouldReturnFalse(self):
+    def test_SubSetOfRequiredFiledsShouldReturnFalse(self) -> None:
         self.assertFalse(parser.isMobileCodeTable(constants.REQUIRED_FIELDS[1:]))
 
 
 class TestCheckAttributesAvailability(unittest.TestCase):
-    def test_RaiseIfNoSuchAttribute(self):
+    def test_RaiseIfNoSuchAttribute(self) -> None:
         self.assertRaises(AttributeError, parser.CheckAttributesAvailability, ["dummy"])
 
 
 class TestExtractAllMobileCodeTables(unittest.TestCase):
-    def test_Sanity(self):
+    def test_Sanity(self) -> None:
         with open(
             constants.SAMPLE_MAIN_HTML_FILE, "r", encoding="utf-8"
         ) as main_html_file:

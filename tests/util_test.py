@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# type: ignore[attr-defined]
 
 import os
 import sys
@@ -12,10 +13,10 @@ import util
 
 
 class TestRemoveParenthesesAndWithin(unittest.TestCase):
-    def test_Sanity(self):
+    def test_Sanity(self) -> None:
         self.assertEqual("Bands", util.RemoveParenthesesAndWithin("Bands (MHz)"))
 
-    def test_MakeNoChangesIfNoParentheses(self):
+    def test_MakeNoChangesIfNoParentheses(self) -> None:
         a_string = "Bands "
         self.assertEqual(a_string, util.RemoveParenthesesAndWithin(a_string))
 
@@ -24,24 +25,24 @@ SLEEP_INTERVAL_SECONDS = 1
 
 
 @util.PacedCall(SLEEP_INTERVAL_SECONDS)
-def VoidFunc():
+def VoidFunc() -> None:
     pass
 
 
 @util.PacedCall(SLEEP_INTERVAL_SECONDS)
-def AnotherVoidFunc():
+def AnotherVoidFunc() -> None:
     pass
 
 
 class TestPacedCall(unittest.TestCase):
-    def test_FirstCallShouldTakeNoTime(self):
+    def test_FirstCallShouldTakeNoTime(self) -> None:
         start_time = time.perf_counter()
         VoidFunc()
         end_time = time.perf_counter()
         run_time = end_time - start_time
         self.assertLess(run_time, SLEEP_INTERVAL_SECONDS)
 
-    def test_CallTwiceShouldTakeOneInterval(self):
+    def test_CallTwiceShouldTakeOneInterval(self) -> None:
         start_time = time.perf_counter()
         AnotherVoidFunc()
         AnotherVoidFunc()

@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# type: ignore[attr-defined]
 
 import os
 import sys
@@ -13,12 +14,12 @@ import requester
 
 
 class TestGetPageContentWithLogging(unittest.TestCase):
-    def setUp(self):
+    def setUp(self) -> None:
         self.EXPECTED_CONTENT = "Page Content"
         self.ENCODING = "utf-8"
         self.URL = "Mock URL"
 
-    def createMockResponse(self, status_code):
+    def createMockResponse(self, status_code: int) -> None:
         headers_dictionary = {"content-type": "HTML"}
         mock_response = Mock(
             status_code=status_code,
@@ -30,7 +31,7 @@ class TestGetPageContentWithLogging(unittest.TestCase):
         return mock_response
 
     @patch("requester.requests", autospec=True)
-    def test_Sanity(self, mock_requests):
+    def test_Sanity(self, mock_requests: Mock) -> None:
         mock_requests.get.return_value = self.createMockResponse(200)
         self.assertEqual(
             self.EXPECTED_CONTENT, requester.GetPageContentWithLogging(self.URL)
