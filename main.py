@@ -3,6 +3,7 @@
 
 import itertools
 import pprint
+from typing import Any
 
 import constants
 import formatter
