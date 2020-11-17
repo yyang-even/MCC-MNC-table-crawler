@@ -12,4 +12,3 @@ autocmd FileType python let b:dispatch = 'pipenv run python3 -m unittest %'
 "               https://vi.stackexchange.com/questions/5110/quickfix-support-for-python-tracebacks
 "
 autocmd FileType python compiler pyunit
-autocmd FileType python set makeprg=pipenv\ run\ python3\ %
