@@ -1,30 +1,44 @@
-default_stages: [commit]
+default_stages: [pre-commit]
 repos:
-  - repo: https://github.com/yyang-even/yyLinuxConfig
-    rev: e475e920fedb28f7bff2a58d1142a255fd3e86c4
+  - repo: https://github.com/yyang-pplus/config-sh.git
+    rev: 5883cd54c082dcae3f34125b9cfcc250b31f79ee
     hooks:
       - id: shfmt
 
   - repo: https://github.com/psf/black
-    rev: 20.8b1
+    rev: 25.1.0
     hooks:
       - id: black
         language_version: python3
 
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v3.2.0
+    rev: v6.0.0
     hooks:
       - id: check-executables-have-shebangs
-        stages: [commit]
+        stages: [pre-commit]
       - id: check-json
       - id: check-merge-conflict
+      - id: check-symlinks
       - id: check-xml
-      - id: check-yaml
-      - id: debug-statements
+      - id: detect-private-key
+      - id: end-of-file-fixer
       - id: trailing-whitespace
-        stages: [commit]
+        stages: [pre-commit]
+
+      # Python only
+      - id: debug-statements
 
   - repo: https://github.com/pre-commit/mirrors-mypy
-    rev: master
+    rev: v1.18.1
     hooks:
       - id: mypy
+
+  - repo: https://github.com/markdownlint/markdownlint.git
+    rev: v0.12.0
+    hooks:
+      - id: markdownlint
+
+  - repo: https://github.com/adrienverge/yamllint.git
+    rev: v1.37.1
+    hooks:
+      - id: yamllint
