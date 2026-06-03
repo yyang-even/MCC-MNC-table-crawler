@@ -1,0 +1,24 @@
+name: MCC-MNC-table-crawler-master
+
+on:  # yamllint disable-line rule:truthy
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v6
+      with:
+        submodules: true
+
+    - name: Install dependencies
+      run: ./scripts/dependencies.sh
+      shell: bash
+
+    - name: Test
+      run: ./tests/tests_runner.sh
+      shell: bash

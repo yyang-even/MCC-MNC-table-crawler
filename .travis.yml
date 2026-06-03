@@ -1,8 +1,0 @@
-language: python
-dist: focal
-os: linux
-before_install: pip install pipenv
-install: pipenv install --dev
-script: ./scripts/test.sh
-git:
-    submodules: false
