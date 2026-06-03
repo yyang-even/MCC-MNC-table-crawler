@@ -20,5 +20,5 @@ jobs:
       shell: bash
 
     - name: Test
-      run: ./tests/tests_runner.sh
+      run: ./scripts/tests_runner.sh
       shell: bash

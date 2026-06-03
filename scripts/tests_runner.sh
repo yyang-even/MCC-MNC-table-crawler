@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -euo pipefail
+
 #
 # This script runs all tests
 #
